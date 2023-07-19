@@ -11,6 +11,7 @@ struct ScrollingBuffer{
 		MaxSize = max_size;
 		Offset = 0;
 		Data.reserve(MaxSize);
+        Data.resize(MaxSize);
 	}
 	void AddPoint(float x, float y){
 		if(Data.size() < MaxSize)

@@ -25,6 +25,7 @@
 #include "implot.h"
 
 #include "tests/TestClearColor.h"
+#include "tests/TestUdpMonitor.h"
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -53,13 +54,13 @@ int main(void){
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+	//glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 	//glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
 
 	/* Create a windowed mode window and its OpenGL context */
 	//window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
-	window = glfwCreateWindow(glfwGetVideoMode(glfwGetPrimaryMonitor())->width,
-							  glfwGetVideoMode(glfwGetPrimaryMonitor())->height, "MyWindow",
+	window = glfwCreateWindow(960,
+								540, "MyWindow",
 							  nullptr, nullptr);
 	if(!window){
 		glfwTerminate();
@@ -110,10 +111,12 @@ int main(void){
 		currentTest = testMenu;
 
 		testMenu->RegisterTest<test::TestClearColor>("Clear Color");
-		//testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
+		testMenu->RegisterTest<test::TestUdpMonitor>("Udp Monitor");
 		//testMenu->RegisterTest<test::TestTexture3DCube>("3D Cube Texture");
 		//testMenu->RegisterTest <test::TestTexture3DLines>("Gyro Watch");
 		//testMenu->RegisterTest <test::TestCamTracking>("Cam Track");
+
+		testMenu->StartWith(1);
 
 		// timing
 		/* Loop until the user closes the window */

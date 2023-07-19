@@ -33,6 +33,12 @@ namespace test
 			m_Tests.push_back(std::make_pair(name, [](){ return new T(); }));
 		}
 
+		void StartWith(int i) 
+		{
+			auto it = m_Tests[i];
+			m_CurrentTest = it.second();
+		}
+
 	private:
 		Test*& m_CurrentTest;
 		std::vector<std::pair<std::string, std::function<Test* ()>>> m_Tests;

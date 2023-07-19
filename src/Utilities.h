@@ -48,6 +48,16 @@ namespace Utility
         }
     }; 
 
+	// 获取当前日期和时间的字符串
+	static std::string GetDateTimeStr() {
+		auto now = std::chrono::system_clock::now();
+		std::time_t tt = std::chrono::system_clock::to_time_t(now);
+		tm local_tm = *localtime(&tt);
+		char buffer[80];
+		strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", &local_tm);
+		return std::string(buffer);
+	}
+
     //template <typename Derived>
     //static Eigen::Matrix<typename Derived::Scalar, 3, 3> skewSymmetric(const Eigen::MatrixBase<Derived> &q)
     //{
