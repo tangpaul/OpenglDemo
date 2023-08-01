@@ -36,5 +36,4 @@ namespace test
 
 		mem_edit.DrawContents(m_MemoryBuffer, 256);
 	}
-
 }
