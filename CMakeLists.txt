@@ -1,11 +1,15 @@
 cmake_minimum_required(VERSION 3.10)
-project(udpmonitor)
+project(Cam2GyroCalib)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+# 3rd lib
 find_package(OpenGL REQUIRED)
+find_package(OpenCV REQUIRED)
 
+# opencv
+include_directories(${OpenCV_INCLUDE_DIRS})
 # vendor
 set(VENDOR_DIR vendor)
 # glm
@@ -35,20 +39,29 @@ file(GLOB IMGUI_IMPL_FILE  "${IMGUI_IMPL_DIR}/*.cpp")
 # src tests
 set(TESTS_DIR ${SRC_DIR}/tests)
 file(GLOB TESTS_FILE  "${TESTS_DIR}/*.cpp")
+# src tracking
+set(SRC_TRACKING_DIR ${SRC_DIR}/tracking)
+file(GLOB SRC_TRACKING_FILE "${SRC_TRACKING_DIR}/*.cpp")
+# src net
+set(SRC_NET_DIR ${SRC_DIR}/net)
+file(GLOB SRC_NET_FILE "${SRC_NET_DIR}/*.cpp")
 
-
-add_executable(udpmonitor
+add_executable(Cam2GyroCalib
                 ${SRC_FILE}
                 ${IMGUI_IMPL_FILE}
                 ${TESTS_FILE}
+                ${SRC_TRACKING_FILE}
+                ${SRC_NET_FILE}
                 ${IMGUI_SOURCE_FILE}
                 ${STB_SOURCE_FILE}
                 )
 
-target_include_directories(udpmonitor PRIVATE
+target_include_directories(Cam2GyroCalib PRIVATE
                             ${SRC_DIR}
                             ${IMGUI_IMPL_DIR}
                             ${TESTS_DIR}
+                            ${SRC_TRACKING_DIR}
+                            ${SRC_NET_DIR}
                             ${GLFW_INCLUDE_DIR}
                             ${VENDOR_DIR}
                             ${GLM_SOURCE_DIR}
@@ -57,7 +70,7 @@ target_include_directories(udpmonitor PRIVATE
                             ${GLAD_INCLUDE_DIR}
                             )
 
-target_link_libraries(udpmonitor OpenGL::GL glfw glad)
-# target_compile_options(udpmonitor PRIVATE -g  -ggdb -O0 -Wall   -fstack-protector-all -march=native -fnon-call-exceptions)   # debug mode
-target_compile_options(udpmonitor PRIVATE -O3 -Wall)   # release mode
+target_link_libraries(Cam2GyroCalib OpenGL::GL glfw glad ${OpenCV_LIBS} pcap m3api)
+# target_compile_options(Cam2GyroCalib PRIVATE -g  -ggdb -O0 -Wall   -fstack-protector-all -march=native -fnon-call-exceptions)   # debug mode
+target_compile_options(Cam2GyroCalib PRIVATE -O3 -Wall)   # release mode
                             
